@@ -24,9 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::post('/register', [registercontroller::class,'Register']);
-Route::post('/login', [registercontroller::class,'login']);
-Route::apiResource('/category',CategoryController::class);
-Route::apiResource('/brands',BrandController::class);
-Route::apiResource('/products',ProductController::class);
-Route::post('/product/update/{id}',[ProductController::class,'update']);
+Route::post('/register', [registercontroller::class, 'Register']);
+Route::post('/login', [registercontroller::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('/category', CategoryController::class);
+    Route::apiResource('/brands', BrandController::class);
+    Route::apiResource('/products', ProductController::class);
+    Route::post('/product/update/{id}', [ProductController::class, 'update']);
+});
